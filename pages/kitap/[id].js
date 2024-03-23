@@ -223,7 +223,7 @@ export default function Kefset() {
             </div>
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
-            {hakkinda[0].hakkinda.bilgi}
+            {hakkinda && hakkinda[0] && hakkinda[0].hakkinda.bilgi}
           </CustomTabPanel>
           <CustomTabPanel value={value} index={2}>
             <div className="flex gap-3 max-lg:flex-col">
