@@ -34,3 +34,8 @@
 .MuiListItemIcon-root {
   margin-right: -14px;
 }
+
+.MuiButtonBase-root {
+  text-transform: capitalize;
+  font-size: 14px;
+}

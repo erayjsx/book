@@ -5,18 +5,50 @@ import { Button, Chip, Grid } from "@mui/material";
 import Header from "@/components/header";
 import BookCard from "@/components/bookCard";
 import BigCard from "@/components/bigCard";
-
-const rethink_Sans = Rethink_Sans({ subsets: ["latin"] });
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Home() {
   const list = [
     {
-      id: 1,
-      title: "Hayvan Çiftliği",
-      author: "George Orwell",
-      image: "",
+      id: "1614",
+      title: "Martin Eden",
+      author: "Jack London",
+      image: "https://1k-cdn.com/resimler/kitaplar/27823_a8d6c_1611779110.jpg",
+      seo: "martin-eden",
+    },
+    {
+      id: "8057",
+      title: "Bir Kadının Yaşamından Yirmi Dört Saat",
+      author: "Stefan Zweig",
+      image: "https://1k-cdn.com/resimler/kitaplar/56586_7Pheo_1647928687.jpg",
+      seo: "bir-kadinin-yasamindan-yirmi-dort-saat",
+    },
+    {
+      id: "48832",
+      title: "Olağanüstü Bir Gece",
+      author: "Stefan Zweig",
+      image: "https://1k-cdn.com/resimler/kitaplar/27823_5b2e5_1591134945.jpg",
+      seo: "olaganustu-bir-gece",
     },
   ];
+
+  const [neOkusam, setNeOkusam] = useState([]);
+
+  const getNeOkusam = async () => {
+    try {
+      const response = await axios.get(
+        "https://z.1000kitap.com/neOkusam?s=&sayfa=1&kume=-1&z=0&us=0&fr=1&hl=tr"
+      );
+      setNeOkusam(response.data.gonderiler);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getNeOkusam();
+  }, []);
 
   return (
     <div className="flex flex-col items-center w-full font-[{$rethink_Sans}]">
@@ -28,21 +60,11 @@ export default function Home() {
             // eslint-disable-next-line react/jsx-key
             <BigCard
               title={item.title}
-              author="George Orwell"
-              image="https://r2.1k-cdn.com/sig/size:96/plain/https%3A%2F%2F1k-cdn.com%2Fresimler%2Fkitaplar%2F56085_RXIua_1525561545.jpg"
-              href={`/kitap/${slugify(item.title)}--${item.id}`}
+              author={item.author}
+              image={item.image}
+              href={`/kitap/${item.seo}--${item.id}`}
             />
           ))}
-          <BigCard
-            title="Martin Eden"
-            author="Jack London"
-            image="https://r2.1k-cdn.com/sig/size:96/plain/https%3A%2F%2F1k-cdn.com%2Fresimler%2Fkitaplar%2F27823_a8d6c_1611779110.jpg"
-          />
-          <BigCard
-            title="Olağanüstü Bir Gece"
-            author="Stefan Zweig"
-            image="https://r2.1k-cdn.com/sig/size:96/plain/https%3A%2F%2F1k-cdn.com%2Fresimler%2Fkitaplar%2F27823_5b2e5_1591134945.jpg"
-          />
         </div>
 
         <h2 className="mb-4 text-2xl font-bold">Konular</h2>
@@ -56,46 +78,19 @@ export default function Home() {
 
         <h2 className="mb-4 text-2xl font-bold">Ne Okusam?</h2>
         <div className="max-lg:grid-cols-1 grid grid-cols-4 my-2 flex-wrap gap-4 w-full *:w-full">
-          <BookCard
-            title="Martin Eden"
-            author="Jack London"
-            image="https://r2.1k-cdn.com/sig/size:96/plain/https%3A%2F%2F1k-cdn.com%2Fresimler%2Fkitaplar%2F27823_a8d6c_1611779110.jpg"
-          />
-          <BookCard
-            title="Martin Eden"
-            author="Jack London"
-            image="https://r2.1k-cdn.com/sig/size:96/plain/https%3A%2F%2F1k-cdn.com%2Fresimler%2Fkitaplar%2F27823_a8d6c_1611779110.jpg"
-          />
-          <BookCard
-            title="Martin Eden"
-            author="Jack London"
-            image="https://r2.1k-cdn.com/sig/size:96/plain/https%3A%2F%2F1k-cdn.com%2Fresimler%2Fkitaplar%2F27823_a8d6c_1611779110.jpg"
-          />
-          <BookCard
-            title="Martin Eden"
-            author="Jack London"
-            image="https://r2.1k-cdn.com/sig/size:96/plain/https%3A%2F%2F1k-cdn.com%2Fresimler%2Fkitaplar%2F27823_a8d6c_1611779110.jpg"
-          />
-          <BookCard
-            title="Martin Eden"
-            author="Jack London"
-            image="https://r2.1k-cdn.com/sig/size:96/plain/https%3A%2F%2F1k-cdn.com%2Fresimler%2Fkitaplar%2F27823_a8d6c_1611779110.jpg"
-          />
-          <BookCard
-            title="Martin Eden"
-            author="Jack London"
-            image="https://r2.1k-cdn.com/sig/size:96/plain/https%3A%2F%2F1k-cdn.com%2Fresimler%2Fkitaplar%2F27823_a8d6c_1611779110.jpg"
-          />
-          <BookCard
-            title="Martin Eden"
-            author="Jack London"
-            image="https://r2.1k-cdn.com/sig/size:96/plain/https%3A%2F%2F1k-cdn.com%2Fresimler%2Fkitaplar%2F27823_a8d6c_1611779110.jpg"
-          />
-          <BookCard
-            title="Martin Eden"
-            author="Jack London"
-            image="https://r2.1k-cdn.com/sig/size:96/plain/https%3A%2F%2F1k-cdn.com%2Fresimler%2Fkitaplar%2F27823_a8d6c_1611779110.jpg"
-          />
+          {neOkusam &&
+            neOkusam.map(
+              (item) =>
+                item.id && (
+                  // eslint-disable-next-line react/jsx-key
+                  <BookCard
+                    title={item.adi}
+                    author={item.ilkYazar}
+                    image={item.resim}
+                    href={`/kitap/${slugify(item.seo_adi)}--${item.id}`}
+                  />
+                )
+            )}
         </div>
       </main>
     </div>

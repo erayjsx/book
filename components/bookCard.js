@@ -17,17 +17,16 @@ export default function BookCard({ title, author, image, href }) {
   };
 
   return (
-    <Link
-      href={href ? href : "/"}
-      className="flex items-start justify-between p-4 border-2 border-zinc-100 rounded-2xl"
-    >
-      <div className="flex gap-4">
-        <img src={image} className="object-cover h-24 rounded-lg" />
-        <div>
-          <h3 className="text-lg font-bold">{title}</h3>
-          <p className="opacity-60">{author}</p>
+    <div className="flex items-start justify-between p-4 border-2 border-zinc-100 rounded-2xl">
+      <Link href={href ? href : "/"} className="flex h-full gap-4">
+        <div className="flex gap-4">
+          <img src={image} className="object-cover h-24 rounded-lg" />
+          <div>
+            <h3 className="text-lg font-black">{title}</h3>
+            <p className="text-sm opacity-60">{author}</p>
+          </div>
         </div>
-      </div>
+      </Link>
       <IconButton
         aria-label="menu"
         aria-controls="menu"
@@ -48,6 +47,6 @@ export default function BookCard({ title, author, image, href }) {
         <MenuItem onClick={handleMenuClose}>Yeni Sekmede Aç</MenuItem>
         <MenuItem onClick={handleMenuClose}>Bağlantıyı Kopyala</MenuItem>
       </Menu>
-    </Link>
+    </div>
   );
 }

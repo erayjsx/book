@@ -7,35 +7,45 @@ import {
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
 } from "@mui/material";
-import { CaretDown, Equals, GearSix, X } from "@phosphor-icons/react";
+import {
+  CaretDown,
+  Compass,
+  Equals,
+  GearSix,
+  Pencil,
+  Textbox,
+  X,
+} from "@phosphor-icons/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { HouseSimple } from "@phosphor-icons/react/dist/ssr";
 
 export default function Header() {
   const router = useRouter();
   const menu = [
     {
       title: "Ana Sayfa",
-      icon: <></>,
+      icon: <HouseSimple size={22} weight="bold" />,
       path: "/",
     },
     {
       title: "Keşfet",
-      icon: <></>,
+      icon: <Compass size={22} weight="bold" />,
       path: "/kesfet",
     },
     {
       title: "Konular",
-      icon: <></>,
+      icon: <Textbox size={22} weight="bold" />,
       path: "/konu",
     },
     {
       title: "Yazarlar",
-      icon: <></>,
+      icon: <Pencil size={22} weight="bold" />,
       path: "/yazar",
     },
   ];
@@ -79,7 +89,6 @@ export default function Header() {
                   size="large"
                   title={item.title}
                   onClick={handleMouseEnter}
-                  onMouseEnter={handleMouseEnter}
                 >
                   {item.title}
                   <CaretDown size={22} className="ml-2" />
@@ -92,14 +101,6 @@ export default function Header() {
                   className="*:w-56 "
                 >
                   <MenuItem onClick={handleMouseLeave}>Edebiyat</MenuItem>
-                  <MenuItem onClick={handleMouseLeave}>Psikoloji</MenuItem>
-                  <MenuItem onClick={handleMouseLeave}>Tarih</MenuItem>
-                  <MenuItem onClick={handleMouseLeave}>Edebiyat</MenuItem>
-                  <MenuItem onClick={handleMouseLeave}>Psikoloji</MenuItem>
-                  <MenuItem onClick={handleMouseLeave}>Tarih</MenuItem>
-                  <MenuItem onClick={handleMouseLeave}>Edebiyat</MenuItem>
-                  <MenuItem onClick={handleMouseLeave}>Psikoloji</MenuItem>
-                  <MenuItem onClick={handleMouseLeave}>Tarih</MenuItem>
                 </Menu>
               </>
             ) : (
@@ -154,27 +155,67 @@ export default function Header() {
       </IconButton>
 
       <Drawer open={open} onClose={toggleDrawer(false)} className="w-full">
-        <div className="flex items-center justify-between w-full h-20 px-4 min-w-72">
-          <div className="text-xl font-bold">Logo</div>
+        <div className="flex items-center justify-between w-full px-4 border-b-2 h-44 min-w-72">
+          <Link href="/" className="text-[#f9a825] text-2xl">
+            kitap<b>s</b>
+          </Link>
           <IconButton
             onClick={toggleDrawer(false)}
             size="large"
             className="text-black"
           >
-            <X size={28} />
+            <X size={24} />
           </IconButton>
         </div>
 
         <List className="w-full *:text-xl *:font-bold">
-          {menu.map((item) => (
+          {menu.map((item, index) => (
             // eslint-disable-next-line react/jsx-key
-            <ListItem key={item.title} disablePadding>
-              <ListItemButton>
-                <ListItemText primary={item.title} />
+
+            <ListItem key={index} disablePadding>
+              <ListItemButton
+                className="py-4"
+                onClick={() => router.push(item.path)}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText>
+                  <p className="text-lg font-bold">{item.title}</p>
+                </ListItemText>
               </ListItemButton>
             </ListItem>
           ))}
+          <ListItem disablePadding>
+            <ListItemButton
+              className="py-4"
+              onClick={() => router.push("/ayarlar")}
+            >
+              <ListItemIcon>
+                <GearSix size={22} weight="bold" />
+              </ListItemIcon>
+              <ListItemText>
+                <p className="text-lg font-bold">Ayarlar</p>
+              </ListItemText>
+            </ListItemButton>
+          </ListItem>
         </List>
+
+        <div className="h-full" />
+
+        <div className="flex flex-col gap-3 p-4">
+          <Button
+            variant="outlined"
+            className="py-3 text-base text-black capitalize border-black rounded-lg"
+          >
+            Kayıt Ol
+          </Button>
+          <Button
+            variant="contained"
+            disableElevation
+            className="bg-[#f9a825] capitalize py-3 text-base rounded-lg"
+          >
+            Giriş Yap
+          </Button>
+        </div>
       </Drawer>
     </header>
   );
