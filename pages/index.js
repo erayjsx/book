@@ -7,6 +7,9 @@ import BookCard from "@/components/bookCard";
 import BigCard from "@/components/bigCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/utils/supabase/server";
 
 export default function Home() {
   const list = [
@@ -50,19 +53,41 @@ export default function Home() {
     getNeOkusam();
   }, []);
 
+  const [kitaplar, setKitaplar] = useState([]);
+  async function fetchBooks() {
+    try {
+      const { data, error } = await supabase
+        .from("kitaplar")
+        .select("*")
+        .limit(3);
+
+      if (error) {
+        throw error;
+      }
+
+      setKitaplar(data);
+    } catch (error) {
+      console.error("Veri çekme sırasında bir hata oluştu:", error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
   return (
     <div className="flex flex-col items-center w-full font-[{$rethink_Sans}]">
       <Header />
       <main className={`flex flex-col container pt-8 max-lg:px-8 px-32 w-full`}>
         <h2 className="mb-4 text-2xl font-bold">Popüler</h2>
         <div className="flex max-lg:flex-col w-full gap-4 mb-10 *:w-full">
-          {list.map((item) => (
+          {kitaplar.map((item) => (
             // eslint-disable-next-line react/jsx-key
             <BigCard
-              title={item.title}
-              author={item.author}
-              image={item.image}
-              href={`/kitap/${item.seo}--${item.id}`}
+              title={item.adi}
+              author={item.yazaradi}
+              image={item.resim}
+              href={`/kitap/${item.seo_adi}--${item.kitap_id}`}
             />
           ))}
         </div>

@@ -20,7 +20,7 @@
 }
 
 .MuiPaper-rounded {
-  border-radius: 15px !important;
+  border-radius: 8px !important;
 }
 
 .MuiMenuItem-root {
@@ -37,5 +37,4 @@
 
 .MuiButtonBase-root {
   text-transform: capitalize;
-  font-size: 14px;
 }
